@@ -1,0 +1,35 @@
+name: 📰 Daily News Agent
+
+on:
+  schedule:
+    # Každý den v 17:00 UTC (19:00 CET/CEST)
+    - cron: '0 17 * * *'
+  
+  # Možnost spustit ručně
+  workflow_dispatch:
+
+jobs:
+  send-daily-news:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: 📦 Install dependencies
+      run: npm install
+      
+    - name: 🚀 Run News Agent
+      run: node news-agent.js
+      env:
+        SMTP_USER: ${{ secrets.SMTP_USER }}
+        SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        
+    - name: ✅ Job completed
+      run: echo "📧 Daily news sent successfully!"
