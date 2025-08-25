@@ -1,0 +1,16 @@
+{
+  "name": "news-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Daily news email agent",
+  "main": "news-agent.js",
+  "scripts": {
+    "start": "node news-agent.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7",
+    "node-fetch": "^3.3.2"
+  },
+  "author": "Jan Kalenskỳ",
+  "license": "MIT"
+}
