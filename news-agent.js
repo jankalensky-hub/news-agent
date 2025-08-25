@@ -57,41 +57,41 @@ async function fetchNews() {
 
 // Generování důvodu důležitosti
 function generateImportanceReason(article, position) {
-   const title = (article.title || '').toLowerCase();
-   const description = (article.description || '').toLowerCase();
-   const content = title + ' ' + description;
-   
-   // Klíčová slova pro kategorizaci
-   const categories = {
-       politics: ['government', 'president', 'congress', 'senate', 'election', 'law', 'policy'],
-       economy: ['market', 'economy', 'stock', 'bank', 'investment', 'business', 'financial'],
-       health: ['health', 'medical', 'hospital', 'disease', 'covid', 'vaccine', 'patient'],
-       technology: ['technology', 'tech', 'ai', 'computer', 'digital', 'internet', 'software'],
-       security: ['security', 'police', 'accident', 'fire', 'crisis', 'attack', 'emergency'],
-       international: ['world', 'international', 'global', 'china', 'russia', 'ukraine', 'europe']
-   };
-   
-   // Určení kategorie
-   let category = 'general';
-   for (const [cat, keywords] of Object.entries(categories)) {
-       if (keywords.some(keyword => content.includes(keyword))) {
-           category = cat;
-           break;
-       }
-   }
-   
-   // Důvody podle kategorie
-   const reasons = {
-       politics: `Politické rozhodnutí s významem pro mezinárodní vztahy. ${position}. nejčtenější zpráva dne.`,
-       economy: `Ekonomická zpráva s dopadem na globální trhy. Může ovlivnit světovou ekonomiku.`,
-       health: `Zdravotní téma s významem pro veřejné zdraví. Důležité pro informovanost občanů.`,
-       technology: `Technologický vývoj měnící způsob života a práce. Trend s dlouhodobým dopadem.`,
-       security: `Bezpečnostní událost s mezinárodním významem. Informace pro občany.`,
-international: `Mezinárodní událost s geopolitickým významem. Může ovlivnit světové dění.`,
-      general: `Významná zpráva dne podle popularity u čtenářů. ${position}. nejdiskutovanější téma.`
-   };
-   
-   return reasons[category];
+    const title = (article.title || '').toLowerCase();
+    const description = (article.description || '').toLowerCase();
+    const content = title + ' ' + description;
+    
+    // Klíčová slova pro kategorizaci
+    const categories = {
+        politics: ['government', 'president', 'congress', 'senate', 'election', 'law', 'policy'],
+        economy: ['market', 'economy', 'stock', 'bank', 'investment', 'business', 'financial'],
+        health: ['health', 'medical', 'hospital', 'disease', 'covid', 'vaccine', 'patient'],
+        technology: ['technology', 'tech', 'ai', 'computer', 'digital', 'internet', 'software'],
+        security: ['security', 'police', 'accident', 'fire', 'crisis', 'attack', 'emergency'],
+        international: ['world', 'international', 'global', 'china', 'russia', 'ukraine', 'europe']
+    };
+    
+    // Určení kategorie
+    let category = 'general';
+    for (const [cat, keywords] of Object.entries(categories)) {
+        if (keywords.some(keyword => content.includes(keyword))) {
+            category = cat;
+            break;
+        }
+    }
+    
+    // Důvody podle kategorie
+    const reasons = {
+        politics: 'Politicke rozhodnuti s vyznamem pro mezinarodni vztahy. ' + position + '. nejctenejsi zprava dne.',
+        economy: 'Ekonomicka zprava s dopadem na globalni trhy. Muze ovlivnit svetovou ekonomiku.',
+        health: 'Zdravotni tema s vyznamem pro verejne zdravi. Dulezite pro informovanost obcanu.',
+        technology: 'Technologicky vyvoj menici zpusob zivota a prace. Trend s dlouhodobym dopadem.',
+        security: 'Bezpecnostni udalost s mezinarodnim vyznamem. Informace pro obcany.',
+        international: 'Mezinarodni udalost s geopolitickym vyznamem. Muze ovlivnit svetove deni.',
+        general: 'Vyznamna zprava dne podle popularity u ctenaru. ' + position + '. nejdiskutovanejsi tema.'
+    };
+    
+    return reasons[category];
 }
 
 // Záložní zprávy pokud API nefunguje
