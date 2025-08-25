@@ -12,7 +12,7 @@ console.log('📧 Cílový e-mail:', EMAIL_TO);
 console.log('⏰ Čas spuštění:', new Date().toLocaleString('cs-CZ'));
 
 // SMTP transporter
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false,
