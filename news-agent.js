@@ -87,8 +87,8 @@ function generateImportanceReason(article, position) {
        health: `Zdravotní téma s významem pro veřejné zdraví. Důležité pro informovanost občanů.`,
        technology: `Technologický vývoj měnící způsob života a práce. Trend s dlouhodobým dopadem.`,
        security: `Bezpečnostní událost s mezinárodním významem. Informace pro občany.`,
-       international: `Mezinárodní událost s geopolitickým významem. Může ovlivnit světové dění.`,
-       general: `Významná zpráva dne podle popularity u čtenářů. ${position}. nejdiskutovanější téma.`
+international: `Mezinárodní událost s geopolitickým významem. Může ovlivnit světové dění.`,
+      general: `Významná zpráva dne podle popularity u čtenářů. ${position}. nejdiskutovanější téma.`
    };
    
    return reasons[category];
