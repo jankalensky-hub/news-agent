@@ -191,6 +191,73 @@ function generateSmartImportance(article, position) {
     // Default
     return `Významná mezinárodní zpráva podle důležitosti a dopadu. ${position}. nejrelevantnější téma dne.`;
 }
+function createEmailHTML(newsData) {
+    const today = new Date().toLocaleDateString('cs-CZ', {
+        weekday: 'long',
+        year: 'numeric', 
+        month: 'long',
+        day: 'numeric'
+    });
+    const time = new Date().toLocaleTimeString('cs-CZ');
+    
+    let html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Denní zprávy</title>';
+    html += '<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;max-width:800px;margin:0 auto;padding:20px;background:#f5f5f5;color:#333;}';
+    html += '.container{background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.1);}';
+    html += '.header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:30px;text-align:center;}';
+    html += '.header h1{margin:0;font-size:2.2em;font-weight:300;}';
+    html += '.header p{margin:10px 0 0 0;opacity:0.9;font-size:1.1em;}';
+    html += '.news-table{width:100%;border-collapse:collapse;margin:0;}';
+    html += '.news-table th{background:#34495e;color:white;padding:18px;text-align:left;font-weight:600;font-size:1.1em;}';
+    html += '.news-table td{padding:20px 18px;border-bottom:1px solid #eee;vertical-align:top;}';
+    html += '.news-table tr:last-child td{border-bottom:none;}';
+    html += '.news-table tr:nth-child(even){background:#fafafa;}';
+    html += '.news-title{font-weight:600;color:#2c3e50;margin-bottom:10px;font-size:1.1em;line-height:1.3;}';
+    html += '.news-context{color:#555;margin-bottom:12px;line-height:1.5;}';
+    html += '.news-source{color:#3498db;text-decoration:none;font-size:0.9em;font-weight:500;}';
+    html += '.news-source:hover{text-decoration:underline;}';
+    html += '.source-name{color:#7f8c8d;font-size:0.85em;font-style:italic;margin-left:10px;}';
+    html += '.importance{color:#e67e22;font-weight:500;line-height:1.5;}';
+    html += '.score{background:#f8f9fa;color:#6c757d;font-size:0.8em;padding:2px 6px;border-radius:3px;margin-left:8px;}';
+    html += '.footer{text-align:center;color:#7f8c8d;padding:25px;background:#f8f9fa;font-size:0.9em;}';
+    html += '.footer strong{color:#2c3e50;}</style></head><body>';
+    
+    html += '<div class="container">';
+    html += '<div class="header"><h1>📧 Denní zpravodajský přehled</h1><p>' + today + '</p></div>';
+    html += '<table class="news-table"><thead><tr><th style="width:60%;">Zpráva</th><th style="width:40%;">Důvod důležitosti</th></tr></thead><tbody>';
+    
+    for (let i = 0; i < newsData.length; i++) {
+        const news = newsData[i];
+        html += '<tr><td>';
+        html += '<div class="news-title">' + (news.title || 'Bez názvu') + '</div>';
+        html += '<div class="news-context">' + (news.context || 'Popis není dostupný') + '</div>';
+        html += '<div style="margin-top:8px;">';
+        html += '<a href="' + (news.source || '#') + '" class="news-source" target="_blank">Číst článek →</a>';
+        html += '<span class="source-name">' + (news.sourceName || 'Neznámý zdroj') + '</span>';
+        if (news.score) {
+            html += '<span class="score">Score: ' + news.score + '</span>';
+        }
+        html += '</div></td>';
+        html += '<td><div class="importance">' + (news.importance || 'Významná zpráva dne') + '</div></td></tr>';
+    }
+    
+    html += '</tbody></table>';
+    html += '<div class="footer">';
+    html += '<strong>📊 Statistiky:</strong> ' + newsData.length + ' zpráv ze ';
+    
+    // Počet unikátních zdrojů
+    const uniqueSources = [];
+    for (let i = 0; i < newsData.length; i++) {
+        if (newsData[i].sourceName && uniqueSources.indexOf(newsData[i].sourceName) === -1) {
+            uniqueSources.push(newsData[i].sourceName);
+        }
+    }
+    
+    html += uniqueSources.length + ' zdrojů<br>';
+    html += '<strong>⏰ Připraveno:</strong> ' + time + ' | <strong>🤖 News Agent</strong> v2.0';
+    html += '</div></div></body></html>';
+    
+    return html;
+}
 
 async function sendEmail(htmlContent, newsCount) {
     try {
