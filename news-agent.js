@@ -28,7 +28,7 @@ async function fetchCzechNews() {
         console.log('📰 Získávám české zprávy...');
         
         // České zprávy z posledních 24 hodin
-        const url = `https://newsapi.org/v2/top-headlines?country=cz&pageSize=10&apiKey=${NEWS_API_KEY}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=${NEWS_API_KEY}`;
         const response = await fetch(url);
         const data = await response.json();
         
